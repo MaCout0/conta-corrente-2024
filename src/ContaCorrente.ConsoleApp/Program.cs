@@ -8,6 +8,8 @@
 
             ContaCorrente contaBeltrano = new ContaCorrente();
 
+            Movimentacao[] historico = new Movimentacao[0];
+
             contaFulano.titular.nome = "Fulano";
             contaFulano.titular.sobreNome = "Detal";
             contaFulano.titular.CPF = "123.456.789-10";
@@ -16,111 +18,67 @@
             contaBeltrano.titular.nome = "Beltrano";
             contaBeltrano.titular.sobreNome = "Detal";
             contaBeltrano.titular.CPF = "123.456.789-10";
-            contaBeltrano.saldo = 500;
+            contaBeltrano.saldo = 1000;
 
             Console.WriteLine($"Saldo atual: {contaFulano.saldo}");
+            Console.WriteLine($"Saldo atual: {contaBeltrano.saldo}");
             Console.ReadLine();
 
             //Console.Clear();
             Console.WriteLine("Teste deposito de 300");
-            contaFulano.valor = 300;
-            contaFulano.Deposito();
+            contaFulano.Deposito(300);
             Console.WriteLine($"Saldo atual: {contaFulano.saldo}");
+            Console.WriteLine($"Saldo atual: {contaBeltrano.saldo}");
             Console.ReadLine();
 
             //Console.Clear();
             Console.WriteLine("Teste saque de 500");
-            contaFulano.valor = 500;
-            contaFulano.Saque();
+            contaFulano.Saque(500);
             Console.WriteLine($"Saldo atual: {contaFulano.saldo}");
+            Console.WriteLine($"Saldo atual: {contaBeltrano.saldo}");
             Console.ReadLine();
 
             //Console.Clear();
             Console.WriteLine("Teste saque de 5000");
-            contaFulano.valor = 5000;
-            contaFulano.Saque();
+            contaFulano.Saque(5000);
             Console.WriteLine($"Saldo atual: {contaFulano.saldo}");
+            Console.WriteLine($"Saldo atual: {contaBeltrano.saldo}");
             Console.ReadLine();
 
             //Console.Clear();
             Console.WriteLine("Teste transferência de 300");
-            contaFulano.valor = 300;
-            contaFulano.Tranferencia();
+            contaFulano.Tranferencia(300, contaBeltrano);
             Console.WriteLine($"Saldo atual: {contaFulano.saldo}");
+            Console.WriteLine($"Saldo atual: {contaBeltrano.saldo}");
             Console.ReadLine();
 
             //Console.Clear();
             Console.WriteLine("Teste transferência de 3000");
-            contaFulano.valor = 3000;
-            contaFulano.Tranferencia();
+            contaFulano.Tranferencia(3000, contaBeltrano);
             Console.WriteLine($"Saldo atual: {contaFulano.saldo}");
+            Console.WriteLine($"Saldo atual: {contaBeltrano.saldo}");
             Console.ReadLine();
 
-
+            Console.Clear();
+            Console.WriteLine("Estrato conta Funlano");
+            historico = contaFulano.Extrato();
+            for(int i = 0; i < historico.Length; i++)
+            {
+                Movimentacao movimentacao = historico[i];
+                if (movimentacao != null)
+                    Console.WriteLine($"{movimentacao.tipo} {movimentacao.valor}");
+            }
+            Console.WriteLine("");
+            Console.WriteLine("Estrato conta Beltrano");
+            historico = contaBeltrano.Extrato();
+            for (int i = 0; i < historico.Length; i++)
+            {
+                Movimentacao movimentacao = historico[i];
+                if (movimentacao != null)
+                    Console.WriteLine($"{movimentacao.tipo} {movimentacao.valor}");
+            }
 
             Console.ReadLine();
-
-        }
-
-    }
-
-    public class Cliente
-    {
-        //atributos
-        public string nome;
-        public string sobreNome;
-        public string CPF;
-    }
-
-    public class Movimentacao
-    {
-        public decimal valor;
-        public string tipo;
-    }
-
-    public class ContaCorrente
-    {
-        //atributos da conta
-        public decimal saldo;
-        public decimal aux = 0;
-        public decimal valor;
-
-
-        //atributos usuario
-        public Cliente titular = new Cliente();
-
-        //atributos extrato
-        public Movimentacao[] historico = new Movimentacao[50];
-
-        public void Deposito()
-        {
-            saldo += valor;
-        }
-
-        public void Saque()
-        {
-            if (valor > saldo)
-            {
-                Console.WriteLine($"Não é possivel sacar pois o valor exede o saldo.");
-
-            }
-            else
-            {
-                saldo -= valor;
-            }
-        }
-
-        public void Tranferencia()
-        {
-            if (valor > saldo)
-            {
-                Console.WriteLine($"Não é possivel Tranferir pois o valor exede o saldo.");
-
-            }
-            else
-            {
-                saldo -= valor;
-            }
         }
     }
 }
